@@ -1,0 +1,35 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: invoice
+      POSTGRES_PASSWORD: invoice
+      POSTGRES_DB: invoice_gst
+    ports:
+      - "5432:5432"
+    volumes:
+      - invoice_gst_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U invoice -d invoice_gst"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: ../..
+      dockerfile: apps/backend/Dockerfile
+    environment:
+      DATABASE_URL: postgresql://invoice:invoice@postgres:5432/invoice_gst
+      JWT_SECRET: change-me-to-a-long-random-production-secret
+      PORT: "3000"
+      CORS_ORIGINS: "*"
+      NODE_ENV: production
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  invoice_gst_pg:

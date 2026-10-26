@@ -1,0 +1,7 @@
+# Optional. The eval scripts run without these.
+# pip install -r ml/requirements-asr.txt
+openai-whisper
+torch
+torchaudio
+transformers
+soundfile

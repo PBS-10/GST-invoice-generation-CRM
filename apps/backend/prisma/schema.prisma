@@ -1,0 +1,244 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id
+  email         String         @unique
+  passwordHash  String
+  vendorId      String         @unique
+  vendor        Vendor         @relation(fields: [vendorId], references: [id])
+  devices       Device[]
+  refreshTokens RefreshToken[]
+  createdAt     DateTime
+  updatedAt     DateTime
+}
+
+model Device {
+  id            String         @id
+  vendorId      String
+  vendor        Vendor         @relation(fields: [vendorId], references: [id])
+  userId        String
+  user          User           @relation(fields: [userId], references: [id])
+  label         String
+  platform      String
+  appVersion    String?
+  seriesCode    String
+  createdAt     DateTime
+  lastSeenAt    DateTime
+  lastSyncAt    DateTime?
+  revokedAt     DateTime?
+  refreshTokens RefreshToken[]
+
+  @@unique([vendorId, seriesCode])
+  @@index([vendorId])
+  @@index([userId])
+}
+
+model RefreshToken {
+  id           String    @id
+  userId       String
+  user         User      @relation(fields: [userId], references: [id])
+  deviceId     String
+  device       Device    @relation(fields: [deviceId], references: [id])
+  tokenHash    String    @unique
+  expiresAt    DateTime
+  revokedAt    DateTime?
+  replacedById String?
+  createdAt    DateTime
+
+  @@index([deviceId])
+  @@index([userId])
+}
+
+model Vendor {
+  id                  String            @id
+  businessName        String
+  tradeName           String?
+  gstin               String?
+  phone               String?
+  email               String?
+  addressLine1        String?
+  addressLine2        String?
+  city                String?
+  stateCode           String
+  pincode             String?
+  gstRegistrationType String
+  invoicePrefix       String
+  logoUri             String?
+  createdAt           DateTime
+  updatedAt           DateTime
+  deletedAt           DateTime?
+  serverVersion       BigInt
+  user                User?
+  devices             Device[]
+  customers           Customer[]
+  products            Product[]
+  invoices            Invoice[]
+  gstConfiguration    GstConfiguration?
+  invoiceSequences    InvoiceSequence[]
+  payments            Payment[]
+  idempotencyKeys     IdempotencyKey[]
+
+  @@index([serverVersion])
+}
+
+model Customer {
+  id            String    @id
+  vendorId      String
+  vendor        Vendor    @relation(fields: [vendorId], references: [id])
+  name          String
+  phone         String?
+  email         String?
+  addressLine1  String?
+  city          String?
+  stateCode     String?
+  pincode       String?
+  gstin         String?
+  customerType  String
+  createdAt     DateTime
+  updatedAt     DateTime
+  deletedAt     DateTime?
+  serverVersion BigInt
+
+  @@index([vendorId, updatedAt])
+  @@index([vendorId, name])
+  @@index([vendorId, serverVersion])
+}
+
+model Product {
+  id                String    @id
+  vendorId          String
+  vendor            Vendor    @relation(fields: [vendorId], references: [id])
+  name              String
+  localName         String?
+  aliases           Json
+  sku               String?
+  hsnCode           String?
+  unit              String
+  sellingPricePaise BigInt
+  gstRateBps        Int
+  priceInclusive    Boolean
+  isActive          Boolean   @default(true)
+  createdAt         DateTime
+  updatedAt         DateTime
+  deletedAt         DateTime?
+  serverVersion     BigInt
+
+  @@index([vendorId, updatedAt])
+  @@index([vendorId, name])
+  @@index([vendorId, serverVersion])
+}
+
+model Invoice {
+  id                     String        @id
+  vendorId               String
+  vendor                 Vendor        @relation(fields: [vendorId], references: [id])
+  invoiceNumber          String
+  financialYear          String
+  customerId             String?
+  customerSnapshot       Json
+  placeOfSupplyStateCode String
+  isInterState           Boolean
+  status                 String
+  subtotalPaise          BigInt
+  discountPaise          BigInt
+  taxablePaise           BigInt
+  cgstPaise              BigInt
+  sgstPaise              BigInt
+  igstPaise              BigInt
+  roundOffPaise          BigInt
+  totalPaise             BigInt
+  paymentStatus          String
+  notes                  String?
+  createdAt              DateTime
+  updatedAt              DateTime
+  finalizedAt            DateTime?
+  serverVersion          BigInt
+  items                  InvoiceItem[]
+  payments               Payment[]
+
+  @@unique([vendorId, financialYear, invoiceNumber])
+  @@index([vendorId, updatedAt])
+  @@index([vendorId, serverVersion])
+}
+
+model InvoiceItem {
+  id                  String  @id
+  invoiceId           String
+  invoice             Invoice @relation(fields: [invoiceId], references: [id])
+  productId           String?
+  productNameSnapshot String
+  localNameSnapshot   String?
+  hsnSnapshot         String?
+  unitSnapshot        String
+  quantityMilli       BigInt
+  unitPricePaise      BigInt
+  gstRateBps          Int
+  priceInclusive      Boolean
+  taxablePaise        BigInt
+  cgstPaise           BigInt
+  sgstPaise           BigInt
+  igstPaise           BigInt
+  lineTotalPaise      BigInt
+
+  @@index([invoiceId])
+}
+
+model Payment {
+  id          String   @id
+  vendorId    String
+  vendor      Vendor   @relation(fields: [vendorId], references: [id])
+  invoiceId   String
+  invoice     Invoice  @relation(fields: [invoiceId], references: [id])
+  method      String
+  amountPaise BigInt
+  paidAt      DateTime
+  reference   String?
+  createdAt   DateTime
+  updatedAt   DateTime
+
+  @@index([invoiceId])
+  @@index([vendorId, updatedAt])
+}
+
+model GstConfiguration {
+  id                String   @id
+  vendorId          String   @unique
+  vendor            Vendor   @relation(fields: [vendorId], references: [id])
+  defaultGstRateBps Int
+  enableIgst        Boolean
+  roundingMode      String
+  compositionScheme Boolean
+  createdAt         DateTime
+  updatedAt         DateTime
+  serverVersion     BigInt
+}
+
+model InvoiceSequence {
+  id            String @id
+  vendorId      String
+  vendor        Vendor @relation(fields: [vendorId], references: [id])
+  financialYear String
+  seriesCode    String @default("A")
+  nextNumber    Int
+
+  @@unique([vendorId, seriesCode, financialYear])
+}
+
+model IdempotencyKey {
+  id        String   @id
+  vendorId  String
+  vendor    Vendor   @relation(fields: [vendorId], references: [id])
+  key       String
+  status    String
+  response  Json
+  createdAt DateTime
+
+  @@unique([vendorId, key])
+}
