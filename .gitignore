@@ -1,0 +1,76 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Builds and caches
+dist/
+build/
+.turbo/
+.expo/
+.expo-shared/
+*.tsbuildinfo
+.cache/
+coverage/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Native / Expo (Continuous Native Generation — regenerate with expo run:*)
+/apps/mobile/ios/
+/apps/mobile/android/
+ios/Pods/
+android/.gradle/
+android/app/build/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+dist-web/
+dist-android/
+dist/
+
+# OS and editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# SQLite local databases
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Python / ML (future /ml)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.mypy_cache/
+.pytest_cache/
+.ipynb_checkpoints/
+*.pt
+*.pth
+*.onnx
+*.bin
+*.safetensors
+ml/datasets/raw/
+ml/datasets/downloads/
+ml/experiments/runs/
+
+# Uploads and generated artifacts
+*.pdf
+!docs/**
+apps/backend/data/

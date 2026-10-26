@@ -1,0 +1,14 @@
+{
+  "name": "invoice-gst",
+  "private": true,
+  "packageManager": "pnpm@10.15.1",
+  "scripts": {
+    "test": "pnpm -r --if-present test",
+    "typecheck": "pnpm -r typecheck",
+    "backend": "pnpm --filter @invoice-gst/backend start:dev",
+    "mobile": "pnpm --filter @invoice-gst/mobile start",
+    "mobile:go": "pnpm --filter @invoice-gst/mobile start:go",
+    "mobile:android": "pnpm --filter @invoice-gst/mobile android",
+    "mobile:web": "pnpm --filter @invoice-gst/mobile web"
+  }
+}
