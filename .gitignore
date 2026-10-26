@@ -9,6 +9,8 @@ node_modules/
 
 # Builds and caches
 dist/
+!packages/shared/dist/
+!packages/shared/dist/**
 build/
 .turbo/
 .expo/
@@ -37,7 +39,9 @@ android/app/build/
 web-build/
 dist-web/
 dist-android/
-dist/
+# Keep packages/shared/dist tracked (built shared package outputs).
+!packages/shared/dist/
+!packages/shared/dist/**
 
 # OS and editors
 .DS_Store
