@@ -74,3 +74,4 @@ ml/experiments/runs/
 *.pdf
 !docs/**
 apps/backend/data/
+apps/mobile/CLAUDE.md

@@ -1,0 +1,9 @@
+{
+  "platforms": ["apple", "android"],
+  "apple": {
+    "modules": ["BillingTranslateModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.billingtranslate.BillingTranslateModule"]
+  }
+}
