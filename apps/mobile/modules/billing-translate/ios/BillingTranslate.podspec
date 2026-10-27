@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.summary        = package['description']
   s.description    = package['description']
   s.license        = 'MIT'
-  s.author         = 'GST Invoice'
+  s.author         = 'Taxo Billvoice'
   s.homepage       = 'https://github.com/local/billing-translate'
   s.platforms      = {
     :ios => '15.1',

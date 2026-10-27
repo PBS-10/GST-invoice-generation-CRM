@@ -86,7 +86,7 @@ export function DashboardScreen() {
           <EmptyState
             compact
             icon="phone-portrait-outline"
-            title="Already use GST Invoice on another phone?"
+            title="Already use Taxo Billvoice on another phone?"
             message="Sign in to restore your cloud shop on this device."
           />
           <Button

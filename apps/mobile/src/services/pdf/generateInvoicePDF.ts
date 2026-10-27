@@ -54,7 +54,7 @@ export async function generateInvoicePDF(
 
   doc.setTitle(invoice.invoiceNumber);
   doc.setAuthor(vendor.businessName);
-  doc.setCreator('GST Invoice');
+  doc.setCreator('Taxo Billvoice');
 
   let cursor = addPage(doc);
   cursor = drawReceipt(cursor, doc, font, draw, vendor, invoice);

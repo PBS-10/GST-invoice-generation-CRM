@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "GST Invoice",
-    "slug": "invoice-gst",
+    "name": "Taxo Billvoice",
+    "slug": "taxo-billvoice",
     "version": "0.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -10,14 +10,14 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "NSSpeechRecognitionUsageDescription": "Allow GST Invoice to turn speech into invoice lines.",
-        "NSMicrophoneUsageDescription": "Allow GST Invoice to hear billing lines."
+        "NSSpeechRecognitionUsageDescription": "Allow Taxo Billvoice to turn speech into invoice lines.",
+        "NSMicrophoneUsageDescription": "Allow Taxo Billvoice to hear billing lines."
       }
     },
     "android": {
       "softwareKeyboardLayoutMode": "resize",
       "adaptiveIcon": {
-        "backgroundColor": "#6A3DE8",
+        "backgroundColor": "#000000",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
@@ -38,8 +38,8 @@
       [
         "expo-speech-recognition",
         {
-          "microphonePermission": "Allow GST Invoice to hear billing lines.",
-          "speechRecognitionPermission": "Allow GST Invoice to turn speech into invoice lines.",
+          "microphonePermission": "Allow Taxo Billvoice to hear billing lines.",
+          "speechRecognitionPermission": "Allow Taxo Billvoice to turn speech into invoice lines.",
           "androidSpeechServicePackages": [
             "com.google.android.googlequicksearchbox"
           ]

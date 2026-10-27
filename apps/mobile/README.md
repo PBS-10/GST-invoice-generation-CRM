@@ -1,4 +1,4 @@
-# GST Invoice — mobile
+# Taxo Billvoice — mobile
 
 Expo (dev client) app for shop billing. Native modules require a custom build — **Expo Go is not supported** for speech or on-device translate.
 

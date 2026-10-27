@@ -105,7 +105,7 @@ export function DatabaseFallback() {
       <View style={[styles.mark, { backgroundColor: colors.hero }]}>
         <Icon name="receipt-outline" size={30} color={colors.onHero} />
       </View>
-      <Text variant="h3">GST Invoice</Text>
+      <Text variant="h3">Taxo Billvoice</Text>
       <View style={styles.status}>
         <ActivityIndicator color={colors.textSecondary} size="small" />
         <Text variant="bodySmall" tone="secondary">
