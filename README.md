@@ -40,4 +40,5 @@ Local data and the GST engine stay on the phone. The backend only supports backu
 ## Setup and docs
 
 - **[SETUP.md](./SETUP.md)** — install and run from scratch  
+- **[Testing](docs/TESTING.md)** — unit and integration tests (Vitest)  
 - [User guide](docs/USER_GUIDE.md) · [Admin guide](docs/ADMIN_GUIDE.md) · [Architecture](docs/ARCHITECTURE.md) · [Data model](docs/DATA_MODEL.md) · [Sync](docs/SYNC.md)
